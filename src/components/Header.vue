@@ -33,6 +33,7 @@ export default {
 
 <style scoped lang="scss">
 @import "../styles/mixins.scss";
+@import "../styles/colors.scss";
 
 .time-container {
 	@include flex-center;
@@ -42,14 +43,14 @@ export default {
 	}
 
 	.circle {
-		@include circle(50px, 50px, #f88);
+		@include circle(50px, 50px, $font-color);
 	}
 
 	.moon {
-		@include circle(50px, 50px, #fd5);
+		@include circle(50px, 50px, $font-color);
 
 		.moon-inner {
-			@include circle(25px, 25px, #fff);
+			@include circle(25px, 25px, $bg-color-main);
 		}
 	}
 }
