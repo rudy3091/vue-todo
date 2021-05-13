@@ -3,3 +3,10 @@
 	justify-content: center;
 	align-items: center;
 }
+
+@mixin circle($w, $h, $bg) {
+	width: $w;
+	height: $h;
+	border-radius: 50%;
+	background-color: $bg;
+}
