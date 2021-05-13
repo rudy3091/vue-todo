@@ -1,16 +1,16 @@
 <template>
 	<main class="body-container">
-		<TodoItem name="go to sleep" due="210514" />
+		<TodoContainer />
 	</main>
 </template>
 
 <script>
-import TodoItem from "./TodoItem.vue";
+import TodoContainer from "./TodoContainer.vue";
 
 export default {
 	name: "Body",
 	components: {
-		TodoItem,
+		TodoContainer,
 	},
 };
 </script>
