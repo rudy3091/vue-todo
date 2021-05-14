@@ -15,7 +15,9 @@
 		</svg>
 
 		<div v-if="!hidden" class="input-wrapper">
-			<input type="text" />
+			<form action="none" @submit.prevent="handleSubmit">
+				<input type="text" />
+			</form>
 			<svg width="20" height="20" viewBox="0 0 100 100" @click="handleClick">
 				<g>
 					<line x1="0" y1="0" x2="100" y2="100"></line>
@@ -36,6 +38,11 @@ export default {
 	},
 	methods: {
 		handleClick() {
+			this.hidden = !this.hidden;
+		},
+		handleSubmit(e) {
+			const content = e.target.querySelector("input").value;
+			console.log(content);
 			this.hidden = !this.hidden;
 		},
 	},
