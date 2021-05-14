@@ -1,6 +1,7 @@
 <template>
 	<section class="todo-container">
 		<TodoItem name="go to sleep" due="210514" />
+		<TodoItem name="finishing this project" due="210521" />
 	</section>
 	<section class="todo-create">
 		<AddTodo />
@@ -25,10 +26,7 @@ export default {
 @import "../styles/colors.scss";
 
 .todo-container {
-	padding: 20px;
-	border: 1px solid $font-color;
-}
-
-.todo-create {
+	width: 80vw;
+	padding: 10px 20px;
 }
 </style>

@@ -57,5 +57,7 @@ export default {
 
 h1 {
 	font-size: 4rem;
+	text-align: center;
+	margin: 45px;
 }
 </style>

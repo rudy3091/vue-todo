@@ -26,6 +26,7 @@ export default {
 	@include flex-center;
 
 	font-size: 1.25rem;
+	margin: 15px;
 
 	.due {
 		margin-left: 30px;

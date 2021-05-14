@@ -16,7 +16,7 @@
 
 		<div v-show="!hidden" class="input-wrapper">
 			<form action="none" @submit.prevent="handleSubmit">
-				<input type="text" />
+				<input v-model="value" type="text" />
 			</form>
 			<svg width="20" height="20" viewBox="0 0 100 100" @click="handleClick">
 				<g>
@@ -34,15 +34,18 @@ export default {
 	data() {
 		return {
 			hidden: true,
+			value: "",
 		};
 	},
 	methods: {
 		handleClick() {
+			this.value = "";
 			this.hidden = !this.hidden;
 		},
-		handleSubmit(e) {
-			const content = e.target.querySelector("input").value;
-			console.log(content);
+		handleSubmit() {
+			console.log(this.value);
+
+			this.value = "";
 			this.hidden = !this.hidden;
 		},
 	},
@@ -78,7 +81,7 @@ export default {
 		@include fade-in(0.3s);
 
 		svg {
-			margin: 10px;
+			margin-left: 30px;
 
 			& > g {
 				fill: none;
@@ -94,6 +97,7 @@ export default {
 			background-color: transparent;
 			border-bottom: 3px solid $font-color;
 			font-size: 1.25rem;
+			padding: 4px 8px;
 
 			&:focus {
 				outline: none;
