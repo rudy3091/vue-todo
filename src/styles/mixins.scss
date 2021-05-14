@@ -10,3 +10,15 @@
 	border-radius: 50%;
 	background-color: $bg;
 }
+
+@keyframes fade-in {
+	from {
+		opacity: 0;
+	} to {
+		opacity: 1;
+	}
+}
+
+@mixin fade-in($t) {
+	animation: fade-in $t ease-in-out;
+}

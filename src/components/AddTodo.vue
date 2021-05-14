@@ -14,7 +14,7 @@
 			</g>
 		</svg>
 
-		<div v-if="!hidden" class="input-wrapper">
+		<div v-show="!hidden" class="input-wrapper">
 			<form action="none" @submit.prevent="handleSubmit">
 				<input type="text" />
 			</form>
@@ -61,6 +61,8 @@ export default {
 
 	.svg {
 		margin: 25px;
+		@include fade-in(0.3s);
+
 		& > g {
 			fill: none;
 			stroke-width: 15px;
@@ -73,6 +75,7 @@ export default {
 		height: 30px;
 		margin: 25px;
 		@include flex-center;
+		@include fade-in(0.3s);
 
 		svg {
 			margin: 10px;
