@@ -1,14 +1,27 @@
 <template>
 	<div class="container">
-		<svg width="30" height="30" viewBox="0 0 100 100" @click="handleClick">
+		<svg
+			v-if="hidden"
+			width="30"
+			height="30"
+			viewBox="0 0 100 100"
+			@click="handleClick"
+			class="svg"
+		>
 			<g>
 				<line x1="50" y1="0" x2="50" y2="100"></line>
 				<line x1="0" y1="50" x2="100" y2="50"></line>
 			</g>
 		</svg>
 
-		<div class="input-wrapper" style="display: {{ isVisible }}">
+		<div v-if="!hidden" class="input-wrapper">
 			<input type="text" />
+			<svg width="20" height="20" viewBox="0 0 100 100" @click="handleClick">
+				<g>
+					<line x1="0" y1="0" x2="100" y2="100"></line>
+					<line x1="0" y1="100" x2="100" y2="0"></line>
+				</g>
+			</svg>
 		</div>
 	</div>
 </template>
@@ -23,13 +36,7 @@ export default {
 	},
 	methods: {
 		handleClick() {
-			console.log(this.hidden);
 			this.hidden = !this.hidden;
-		},
-	},
-	computed: {
-		isVisible() {
-			return this.hidden ? "none" : "block";
 		},
 	},
 };
@@ -43,8 +50,9 @@ export default {
 	@include flex-center;
 	flex-direction: column;
 	width: 100%;
+	color: $font-color;
 
-	svg {
+	.svg {
 		margin: 25px;
 		& > g {
 			fill: none;
@@ -56,13 +64,30 @@ export default {
 	.input-wrapper {
 		width: 100%;
 		height: 30px;
+		margin: 25px;
+		@include flex-center;
+
+		svg {
+			margin: 10px;
+
+			& > g {
+				fill: none;
+				stroke-width: 15px;
+				stroke: $font-color;
+			}
+		}
 
 		input {
 			width: 100%;
 			height: 100%;
 			border: none;
-			background-color: #f2f2f2;
-			border-radius: 4px;
+			background-color: transparent;
+			border-bottom: 3px solid $font-color;
+			font-size: 1.25rem;
+
+			&:focus {
+				outline: none;
+			}
 		}
 	}
 }
