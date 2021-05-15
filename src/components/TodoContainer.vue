@@ -1,4 +1,9 @@
 <template>
+	<LoadingSpinner
+		v-bind:width="50"
+		v-bind:height="50"
+		v-bind:loading="loading"
+	/>
 	<section class="todo-container">
 		<TodoItem
 			v-for="todo in todos"
@@ -15,6 +20,8 @@
 <script>
 import TodoItem from "./TodoItem.vue";
 import AddTodo from "./AddTodo.vue";
+import LoadingSpinner from "./LoadingSpinner.vue";
+
 import axios from "axios";
 
 export default {
@@ -22,6 +29,7 @@ export default {
 	components: {
 		TodoItem,
 		AddTodo,
+		LoadingSpinner,
 	},
 	data() {
 		return {
