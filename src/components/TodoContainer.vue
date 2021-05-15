@@ -1,8 +1,11 @@
 <template>
 	<section class="todo-container">
-		<div v-for="todo in todos" v-bind:key="todo.id">
-			<TodoItem v-bind:name="todo.content" v-bind:due="todo.due" />
-		</div>
+		<TodoItem
+			v-for="todo in todos"
+			v-bind:key="todo.id"
+			v-bind:name="todo.content"
+			v-bind:due="todo.due"
+		/>
 	</section>
 	<section class="todo-create">
 		<AddTodo />
@@ -22,20 +25,16 @@ export default {
 	},
 	data() {
 		return {
+			loading: true,
 			todos: [],
 		};
-	},
-	methods: {
-		fetchTodos() {
-			axios
-				.get("http://localhost:8081/api/todos")
-				.then((res) => (this.todos = res.data));
-		},
 	},
 	created() {
 		axios
 			.get("http://localhost:8081/api/todos")
-			.then((res) => (this.todos = res.data));
+			.then((res) => (this.todos = res.data))
+			.then(() => (this.loading = false))
+			.catch((err) => console.error(err));
 	},
 };
 </script>
