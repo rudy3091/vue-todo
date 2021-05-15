@@ -15,7 +15,7 @@ export default {
 	name: "Header",
 	data() {
 		return {
-			name: "rudy"
+			name: "rudy",
 		};
 	},
 	computed: {
@@ -26,8 +26,8 @@ export default {
 			else if (10 < h && h <= 17) return "afternoon";
 			else if (17 < h && h <= 22) return "Evening";
 			else return "night";
-		}
-	}
+		},
+	},
 };
 </script>
 
@@ -38,7 +38,7 @@ export default {
 .time-container {
 	@include flex-center;
 	margin-top: 25vh;
-	
+
 	& > div {
 		margin: 0 30px;
 	}
