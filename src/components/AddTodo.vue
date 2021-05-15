@@ -16,9 +16,16 @@
 
 		<div v-show="!hidden" class="input-wrapper">
 			<form action="none" @submit.prevent="handleSubmit">
-				<input v-model="value" type="text" />
+				<label for="content">Name ?</label>
+				<input name="content" v-model="value" type="text" />
 			</form>
-			<svg width="20" height="20" viewBox="0 0 100 100" @click="handleClick">
+			<svg
+				class="form-close"
+				width="20"
+				height="20"
+				viewBox="0 0 100 100"
+				@click="handleClick"
+			>
 				<g>
 					<line x1="0" y1="0" x2="100" y2="100"></line>
 					<line x1="0" y1="100" x2="100" y2="0"></line>
@@ -65,6 +72,7 @@ export default {
 	.svg {
 		margin: 25px;
 		@include fade-in(0.3s);
+		cursor: pointer;
 
 		& > g {
 			fill: none;
@@ -77,11 +85,15 @@ export default {
 		width: 100%;
 		height: 30px;
 		margin: 25px;
+
 		@include flex-center;
+		align-items: flex-end;
+
 		@include fade-in(0.3s);
 
 		svg {
 			margin-left: 30px;
+			cursor: pointer;
 
 			& > g {
 				fill: none;
@@ -98,10 +110,15 @@ export default {
 			border-bottom: 3px solid $font-color;
 			font-size: 1.25rem;
 			padding: 4px 8px;
+			color: $font-color;
 
 			&:focus {
 				outline: none;
 			}
+		}
+
+		.form-close {
+			margin-bottom: 10px;
 		}
 	}
 }
