@@ -1,18 +1,20 @@
 <template>
 	<header>
 		<div class="time-container">
-			<div class="sun"></div>
-			<div class="moon">
-				<div class="moon-inner"></div>
-			</div>
+			<TimeIndicator hour="10" minute="10" isFormat24 isAm />
 		</div>
 		<h1>Good {{ greeting }} {{ name }}!</h1>
 	</header>
 </template>
 
 <script>
+import TimeIndicator from "./TimeIndicator.vue";
+
 export default {
 	name: "Header",
+	components: {
+		TimeIndicator,
+	},
 	data() {
 		return {
 			name: "rudy",
@@ -38,22 +40,6 @@ export default {
 .time-container {
 	@include flex-center;
 	margin-top: 25vh;
-
-	& > div {
-		margin: 0 30px;
-	}
-
-	.sun {
-		@include circle(50px, 50px, $font-color);
-	}
-
-	.moon {
-		@include circle(50px, 50px, $font-color);
-
-		.moon-inner {
-			@include circle(25px, 25px, $bg-color-main);
-		}
-	}
 }
 
 h1 {
