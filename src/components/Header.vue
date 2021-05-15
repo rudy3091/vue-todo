@@ -1,7 +1,7 @@
 <template>
 	<header>
 		<div class="time-container">
-			<div class="circle"></div>
+			<div class="sun"></div>
 			<div class="moon">
 				<div class="moon-inner"></div>
 			</div>
@@ -37,12 +37,13 @@ export default {
 
 .time-container {
 	@include flex-center;
+	margin-top: 25vh;
 	
 	& > div {
 		margin: 0 30px;
 	}
 
-	.circle {
+	.sun {
 		@include circle(50px, 50px, $font-color);
 	}
 
