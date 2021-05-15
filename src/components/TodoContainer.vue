@@ -1,7 +1,8 @@
 <template>
 	<section class="todo-container">
-		<TodoItem name="go to sleep" due="210514" />
-		<TodoItem name="finishing this project" due="210521" />
+		<div v-for="todo in todos" v-bind:key="todo.id">
+			<TodoItem v-bind:name="todo.content" v-bind:due="todo.due" />
+		</div>
 	</section>
 	<section class="todo-create">
 		<AddTodo />
@@ -11,12 +12,30 @@
 <script>
 import TodoItem from "./TodoItem.vue";
 import AddTodo from "./AddTodo.vue";
+import axios from "axios";
 
 export default {
 	name: "TodoContainer",
 	components: {
 		TodoItem,
 		AddTodo,
+	},
+	data() {
+		return {
+			todos: [],
+		};
+	},
+	methods: {
+		fetchTodos() {
+			axios
+				.get("http://localhost:8081/api/todos")
+				.then((res) => (this.todos = res.data));
+		},
+	},
+	created() {
+		axios
+			.get("http://localhost:8081/api/todos")
+			.then((res) => (this.todos = res.data));
 	},
 };
 </script>
