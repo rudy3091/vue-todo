@@ -1,7 +1,7 @@
 <template>
 	<header>
 		<div class="time-container">
-			<TimeIndicator hour="10" minute="10" isFormat24 isAm />
+			<TimeIndicator v-bind:date="date" />
 		</div>
 		<h1>Good {{ greeting }} {{ name }}!</h1>
 	</header>
@@ -18,18 +18,33 @@ export default {
 	data() {
 		return {
 			name: "rudy",
+			date: new Date(),
+			tick: 0,
 		};
 	},
 	computed: {
 		greeting() {
-			const date = new Date();
-			const h = date.getHours();
+			const h = this.date.getHours();
 			if (7 <= h && h <= 10) return "morning";
 			else if (10 < h && h <= 17) return "afternoon";
 			else if (17 < h && h <= 22) return "Evening";
 			else return "night";
 		},
 	},
+	methods: {
+		setTimer() {
+			const self = this;
+			this.tick = setInterval(() => {
+				self.date = new Date();
+			}, 1000);
+		},
+	},
+	created() {
+		this.setTimer();
+	},
+	beforeUnmount() {
+		clearInterval(this.tick);
+	}
 };
 </script>
 
@@ -39,7 +54,7 @@ export default {
 
 .time-container {
 	@include flex-center;
-	margin-top: 25vh;
+	margin-top: 15vh;
 }
 
 h1 {
