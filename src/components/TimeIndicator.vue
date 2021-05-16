@@ -34,6 +34,7 @@ export default {
 	data() {
 		return {
 			times: [],
+			h: 0,
 			offset: 0,
 		};
 	},
@@ -57,7 +58,7 @@ export default {
 	methods: {
 		format(t) {
 			return t > 9 ? `${t}` : `0${t}`;
-		}
+		},
 	},
 	created() {
 		const h = this.date.getHours();
@@ -73,10 +74,19 @@ export default {
 	},
 	beforeUpdate() {
 		const m = this.date.getMinutes();
-		if (m === 0) {
-			this.times.push(this.format(this.date.getHours() + 2));
+		const s = this.date.getSeconds();
+
+		if (m === 0 && s === 0) {
+			this.offset = 600;
+			const newHour = this.date.getHours();
+
+			this.times = this.times.slice(1);
+			this.offset = 0;
+
+			this.times.push(this.format((newHour + 2) % 24));
+		} else {
+			this.offset = (m / 60) * 600;
 		}
-		this.offset = (m / 60) * 600;
 	},
 };
 </script>
@@ -107,7 +117,7 @@ export default {
 		flex-direction: column;
 		font-size: 1.25rem;
 		font-weight: 600;
-		transition: transform 0.5s ease;
+		transition: transform 1s ease;
 	}
 
 	.spacer-wrapper {
