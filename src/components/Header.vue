@@ -54,7 +54,7 @@ export default {
 
 .time-container {
 	@include flex-center;
-	margin-top: 15vh;
+	margin-top: 10vh;
 }
 
 h1 {

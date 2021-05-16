@@ -142,7 +142,7 @@ export default {
 }
 
 .indicator-container {
-	font-size: 1.25rem;
+	font-size: 1.5rem;
 	font-weight: 600;
 	margin-bottom: 10px;
 }
