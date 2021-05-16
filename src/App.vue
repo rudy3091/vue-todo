@@ -38,4 +38,8 @@ body {
 
 	@include fade-in(0.3s);
 }
+
+* {
+	box-sizing: border-box;
+}
 </style>
