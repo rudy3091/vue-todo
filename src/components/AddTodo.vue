@@ -36,6 +36,8 @@
 </template>
 
 <script>
+import axios from "axios";
+
 export default {
 	name: "AddTodo",
 	data() {
@@ -50,10 +52,20 @@ export default {
 			this.hidden = !this.hidden;
 		},
 		handleSubmit() {
-			console.log(this.value);
+			this.createTodo();
 
 			this.value = "";
 			this.hidden = !this.hidden;
+		},
+		createTodo() {
+			axios
+				.post("http://localhost:8081/api/todos", {
+					content: this.value,
+					due: "test",
+					done: false,
+				})
+				.then((res) => console.log(res.data))
+				.catch((err) => console.error(err));
 		},
 	},
 };
