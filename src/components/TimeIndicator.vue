@@ -13,7 +13,7 @@
 				class="rotator"
 				v-for="time in times"
 				:key="time"
-				:style="{ transform: 'translate(-' + offset + 'px)' }"
+				:style="{ transform: 'translate(-' + offset + 'px)', transition: animate }"
 			>
 				<div class="spacer-wrapper">
 					<div class="spacer"></div>
@@ -36,6 +36,7 @@ export default {
 			times: [],
 			h: 0,
 			offset: 0,
+			slide: true,
 		};
 	},
 	props: {
@@ -54,6 +55,9 @@ export default {
 			const s = this.date.getSeconds();
 			return s > 9 ? s : `0${s}`;
 		},
+		animate() {
+			return `transform ${this.slide ? "1s" : "0s"} ease`;
+		}
 	},
 	methods: {
 		format(t) {
@@ -77,14 +81,16 @@ export default {
 		const s = this.date.getSeconds();
 
 		if (m === 0 && s === 0) {
+			this.slide = true;
 			this.offset = 600;
-			const newHour = this.date.getHours();
-
+		} else if (m === 0 && this.offset === 600) {
+			this.slide = false;
 			this.times = this.times.slice(1);
-			this.offset = 0;
-
+			const newHour = this.date.getHours();
 			this.times.push(this.format((newHour + 2) % 24));
+			this.offset = 0;
 		} else {
+			this.slide = true;
 			this.offset = (m / 60) * 600;
 		}
 	},
@@ -117,7 +123,6 @@ export default {
 		flex-direction: column;
 		font-size: 1.25rem;
 		font-weight: 600;
-		transition: transform 1s ease;
 	}
 
 	.spacer-wrapper {
