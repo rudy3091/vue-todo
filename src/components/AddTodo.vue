@@ -58,13 +58,15 @@ export default {
 			this.hidden = !this.hidden;
 		},
 		createTodo() {
+			const data = {
+				content: this.value,
+				due: "test",
+				done: false,
+			};
 			axios
-				.post("http://localhost:8081/api/todos", {
-					content: this.value,
-					due: "test",
-					done: false,
-				})
+				.post("http://localhost:8081/api/todos", data)
 				.then((res) => console.log(res.data))
+				.then(() => this.$emit("posted", data))
 				.catch((err) => console.error(err));
 		},
 	},

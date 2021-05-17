@@ -13,7 +13,7 @@
 		/>
 	</section>
 	<section class="todo-create">
-		<AddTodo />
+		<AddTodo @posted="render($event)" />
 	</section>
 </template>
 
@@ -37,12 +37,20 @@ export default {
 			todos: [],
 		};
 	},
+	methods: {
+		sendGetRequest() {
+			axios
+				.get("http://localhost:8081/api/todos")
+				.then((res) => (this.todos = res.data))
+				.then(() => (this.loading = false))
+				.catch((err) => console.error(err));
+		},
+		render(e) {
+			this.todos.push(e);
+		},
+	},
 	created() {
-		axios
-			.get("http://localhost:8081/api/todos")
-			.then((res) => (this.todos = res.data))
-			.then(() => (this.loading = false))
-			.catch((err) => console.error(err));
+		this.sendGetRequest();
 	},
 };
 </script>
