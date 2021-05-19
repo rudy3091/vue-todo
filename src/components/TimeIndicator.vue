@@ -28,7 +28,7 @@
 				</div>
 
 				<div class="time-label">
-					<TimeIcons v-bind:h="hour"/>
+					<TimeIcons v-bind:h="time"/>
 					<span> {{ time }}:00 </span>
 				</div>
 			</div>
