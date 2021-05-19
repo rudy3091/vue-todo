@@ -17,12 +17,12 @@
 		<div class="input-wrapper">
 			<form v-show="!hidden" action="none" @submit.prevent="showDueInput">
 				<label for="content">Name ?</label>
-				<input name="content" v-model="value" type="text" />
+				<input name="content" v-model="value" type="text" autocomplete="off" />
 			</form>
 
 			<form v-if="!dueHidden" action="none" @submit.prevent="handleSubmit">
 				<label for="content">Due ?</label>
-				<input name="due" v-model="dueValue" type="text" />
+				<input name="due" v-model="dueValue" type="text" autocomplete="off" />
 			</form>
 
 			<svg
