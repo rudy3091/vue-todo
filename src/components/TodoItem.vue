@@ -1,5 +1,5 @@
 <template>
-	<div class="item-container">
+	<div v-if="!done" class="item-container">
 		<div class="name">{{ name }}</div>
 		<div class="due">{{ due }}</div>
 	</div>

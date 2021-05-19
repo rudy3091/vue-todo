@@ -10,6 +10,7 @@
 			v-bind:key="todo.id"
 			v-bind:name="todo.content"
 			v-bind:due="todo.due"
+			v-bind:done="todo.done"
 		/>
 	</section>
 	<section class="todo-create">
