@@ -1,11 +1,11 @@
 <template>
 	<div class="container">
 		<svg
-			v-if="hidden"
+			v-if="hidden && dueHidden"
 			width="30"
 			height="30"
 			viewBox="0 0 100 100"
-			@click="handleClick"
+			@click="showContentInput"
 			class="svg"
 		>
 			<g>
@@ -14,17 +14,24 @@
 			</g>
 		</svg>
 
-		<div v-show="!hidden" class="input-wrapper">
-			<form action="none" @submit.prevent="handleSubmit">
+		<div class="input-wrapper">
+			<form v-show="!hidden" action="none" @submit.prevent="showDueInput">
 				<label for="content">Name ?</label>
 				<input name="content" v-model="value" type="text" />
 			</form>
+
+			<form v-if="!dueHidden" action="none" @submit.prevent="handleSubmit">
+				<label for="content">Due ?</label>
+				<input name="due" v-model="dueValue" type="text" />
+			</form>
+
 			<svg
 				class="form-close"
 				width="20"
 				height="20"
 				viewBox="0 0 100 100"
-				@click="handleClick"
+				v-show="!hidden || !dueHidden"
+				@click="hideAll"
 			>
 				<g>
 					<line x1="0" y1="0" x2="100" y2="100"></line>
@@ -44,23 +51,36 @@ export default {
 		return {
 			hidden: true,
 			value: "",
+			dueHidden: true,
+			dueValue: "",
 		};
 	},
 	methods: {
-		handleClick() {
+		hideAll() {
+			this.hidden = true;
+			this.dueHidden = true;
 			this.value = "";
-			this.hidden = !this.hidden;
+			this.dueValue = "";
+		},
+		showContentInput() {
+			this.hidden = false;
+		},
+		showDueInput() {
+			this.hidden = true;
+			this.dueHidden = false;
 		},
 		handleSubmit() {
 			this.createTodo();
 
 			this.value = "";
-			this.hidden = !this.hidden;
+			this.dueValue = "";
+			this.hidden = true;
+			this.dueHidden = true;
 		},
 		createTodo() {
 			const data = {
 				content: this.value,
-				due: "test",
+				due: this.dueValue,
 				done: false,
 			};
 			axios
