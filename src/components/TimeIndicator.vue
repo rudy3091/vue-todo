@@ -13,7 +13,10 @@
 				class="rotator"
 				v-for="time in times"
 				:key="time"
-				:style="{ transform: 'translate(-' + offset + 'px)', transition: animate }"
+				:style="{
+					transform: 'translate(-' + offset + 'px)',
+					transition: animate,
+				}"
 			>
 				<div class="spacer-wrapper">
 					<div class="spacer"></div>
@@ -23,14 +26,24 @@
 					<div class="spacer"></div>
 					<div class="spacer"></div>
 				</div>
-				<div>{{ time }}:00</div>
+
+				<div class="time-label">
+					<TimeIcons v-bind:h="hour"/>
+					<span> {{ time }}:00 </span>
+				</div>
 			</div>
 		</article>
 	</section>
 </template>
 
 <script>
+import TimeIcons from "./TimeIcons.vue";
+
 export default {
+	name: "TimeIndicator",
+	components: {
+		TimeIcons,
+	},
 	data() {
 		return {
 			times: [],
@@ -45,19 +58,19 @@ export default {
 	computed: {
 		hour() {
 			const h = this.date.getHours();
-			return h > 9 ? h : `0${h}`;
+			return h > 9 ? h.toString() : `0${h}`;
 		},
 		minute() {
 			const m = this.date.getMinutes();
-			return m > 9 ? m : `0${m}`;
+			return m > 9 ? m.toString() : `0${m}`;
 		},
 		second() {
 			const s = this.date.getSeconds();
-			return s > 9 ? s : `0${s}`;
+			return s > 9 ? s.toString() : `0${s}`;
 		},
 		animate() {
 			return `transform ${this.slide ? "1s" : "0s"} ease`;
-		}
+		},
 	},
 	methods: {
 		format(t) {
@@ -112,6 +125,12 @@ export default {
 	}
 }
 
+.indicator-container {
+	font-size: 1.5rem;
+	font-weight: 600;
+	margin-bottom: 10px;
+}
+
 .container {
 	@include flex-center;
 
@@ -146,9 +165,7 @@ export default {
 	}
 }
 
-.indicator-container {
-	font-size: 1.5rem;
-	font-weight: 600;
-	margin-bottom: 10px;
+.time-label {
+	@include flex-center;
 }
 </style>
