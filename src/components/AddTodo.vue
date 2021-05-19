@@ -136,18 +136,22 @@ export default {
 			}
 		}
 
-		input {
-			width: 100%;
-			height: 100%;
-			border: none;
-			background-color: transparent;
-			border-bottom: 3px solid $font-color;
-			font-size: 1.25rem;
-			padding: 4px 8px;
-			color: $font-color;
+		form {
+			@include fade-in(0.3s);
 
-			&:focus {
-				outline: none;
+			input {
+				width: 100%;
+				height: 100%;
+				border: none;
+				background-color: transparent;
+				border-bottom: 3px solid $font-color;
+				font-size: 1.25rem;
+				padding: 4px 8px;
+				color: $font-color;
+
+				&:focus {
+					outline: none;
+				}
 			}
 		}
 
