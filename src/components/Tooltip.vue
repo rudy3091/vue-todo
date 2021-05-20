@@ -1,5 +1,7 @@
 <template>
-	<div class="tooltip-container" :class="{ show }">{{ content }}</div>
+	<div v-show="show" class="tooltip-container" :class="{ show }">
+		{{ content }}
+	</div>
 </template>
 
 <script>
@@ -27,6 +29,7 @@ export default {
 	background-color: $font-color;
 	opacity: 0;
 	transition: opacity 0.2s ease;
+	@include fade-in(0.2s);
 
 	&.show {
 		opacity: 1;
