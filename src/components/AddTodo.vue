@@ -85,8 +85,8 @@ export default {
 			};
 			axios
 				.post("http://localhost:8081/api/todos", data)
-				.then((res) => console.log(res.data))
-				.then(() => this.$emit("posted", data))
+				.then((res) => res.data)
+				.then((d) => this.$emit("posted", { id: d.id, ...data }))
 				.catch((err) => console.error(err));
 		},
 	},

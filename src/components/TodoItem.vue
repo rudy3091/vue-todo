@@ -1,6 +1,6 @@
 <template>
 	<div
-		v-if="!done"
+		v-if="!done && !destroyed"
 		class="item-container"
 		:class="{ hover: show }"
 		@mouseover="showIcons"
@@ -29,6 +29,7 @@
 					class="icon-wrapper"
 					@mouseover="toggleDoneTooltip"
 					@mouseout="toggleDoneTooltip"
+					@click="makeItDone"
 				>
 					<Tooltip content="Done" :show="showDoneTooltip" />
 					<svg class="icon" width="20" height="20" viewBox="0 0 100 100">
@@ -53,6 +54,7 @@
 					class="icon-wrapper"
 					@mouseover="toggleDeleteTooltip"
 					@mouseout="toggleDeleteTooltip"
+					@click="makeItDeleted"
 				>
 					<Tooltip content="Delete" :show="showDeleteTooltip" />
 					<svg class="icon" width="20" height="20" viewBox="0 0 100 100">
@@ -76,6 +78,7 @@
 
 <script>
 import Tooltip from "./Tooltip.vue";
+import { handleDone, handleDelete } from "../handlers/todoHandler.js";
 
 export default {
 	name: "TodoItem",
@@ -83,6 +86,7 @@ export default {
 		Tooltip,
 	},
 	props: {
+		tid: Number,
 		name: String,
 		due: String,
 		done: Boolean,
@@ -90,6 +94,7 @@ export default {
 	data() {
 		return {
 			show: false,
+			destroyed: false,
 			menuClicked: false,
 			showDoneTooltip: false,
 			showEditTooltip: false,
@@ -115,6 +120,18 @@ export default {
 		toggleDeleteTooltip() {
 			this.showDeleteTooltip = !this.showDeleteTooltip;
 		},
+		makeItDone() {
+			handleDone(this.tid, {
+				content: this.done,
+				due: this.due,
+				done: this.done,
+			});
+			this.destroyed = true;
+		},
+		makeItDeleted() {
+			handleDelete(this.tid);
+			this.destroyed = true;
+		}
 	},
 };
 </script>
