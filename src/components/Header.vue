@@ -3,7 +3,7 @@
 		<div class="time-container">
 			<TimeIndicator v-bind:date="date" />
 		</div>
-		<h1>Good {{ greeting }} {{ name }}!</h1>
+		<h1>Good {{ greeting }}!</h1>
 	</header>
 </template>
 
@@ -17,7 +17,6 @@ export default {
 	},
 	data() {
 		return {
-			name: "rudy",
 			date: new Date(),
 			tick: 0,
 		};
