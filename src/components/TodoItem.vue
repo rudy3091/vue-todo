@@ -25,25 +25,49 @@
 				:class="{ opened: menuClicked }"
 				:style="{ opacity: menuClicked ? 1 : 0 }"
 			>
-				<svg width="20" height="20" viewBox="0 0 100 100">
-					<circle cx="50" cy="50" r="43" />
-					<polyline points="30,50 50,70 70,30" />
-				</svg>
+				<div
+					class="icon-wrapper"
+					@mouseover="toggleDoneTooltip"
+					@mouseout="toggleDoneTooltip"
+				>
+					<Tooltip content="Done" :show="showDoneTooltip" />
+					<svg class="icon" width="20" height="20" viewBox="0 0 100 100">
+						<circle cx="50" cy="50" r="43" />
+						<polyline points="30,50 50,70 70,30" />
+					</svg>
+				</div>
 
-				<svg width="20" height="20" viewBox="0 0 100 100">
-					<circle cx="50" cy="50" r="43" />
-					<line x1="30" y1="70" x2="70" y2="30" />
-				</svg>
+				<div
+					class="icon-wrapper"
+					@mouseover="toggleEditTooltip"
+					@mouseout="toggleEditTooltip"
+				>
+					<Tooltip content="Edit" :show="showEditTooltip" />
+					<svg class="icon" width="20" height="20" viewBox="0 0 100 100">
+						<circle cx="50" cy="50" r="43" />
+						<line x1="30" y1="70" x2="70" y2="30" />
+					</svg>
+				</div>
 
-				<svg width="20" height="20" viewBox="0 0 100 100">
-					<circle cx="50" cy="50" r="43" />
-					<line x1="30" y1="30" x2="70" y2="70" />
-					<line x1="30" y1="70" x2="70" y2="30" />
-				</svg>
+				<div
+					class="icon-wrapper"
+					@mouseover="toggleDeleteTooltip"
+					@mouseout="toggleDeleteTooltip"
+				>
+					<Tooltip content="Delete" :show="showDeleteTooltip" />
+					<svg class="icon" width="20" height="20" viewBox="0 0 100 100">
+						<circle cx="50" cy="50" r="43" />
+						<line x1="30" y1="30" x2="70" y2="70" />
+						<line x1="30" y1="70" x2="70" y2="30" />
+					</svg>
+				</div>
 			</div>
 		</div>
 
-		<div class="body-container" :style="{ opacity: menuClicked && show ? 0.3 : 1 }">
+		<div
+			class="body-container"
+			:style="{ opacity: menuClicked && show ? 0.3 : 1 }"
+		>
 			<div class="name">{{ name }}</div>
 			<div class="due">{{ due }}</div>
 		</div>
@@ -51,8 +75,13 @@
 </template>
 
 <script>
+import Tooltip from "./Tooltip.vue";
+
 export default {
 	name: "TodoItem",
+	components: {
+		Tooltip,
+	},
 	props: {
 		name: String,
 		due: String,
@@ -62,6 +91,9 @@ export default {
 		return {
 			show: false,
 			menuClicked: false,
+			showDoneTooltip: false,
+			showEditTooltip: false,
+			showDeleteTooltip: false,
 		};
 	},
 	methods: {
@@ -73,6 +105,15 @@ export default {
 		},
 		toggleMenu() {
 			this.menuClicked = !this.menuClicked;
+		},
+		toggleDoneTooltip() {
+			this.showDoneTooltip = !this.showDoneTooltip;
+		},
+		toggleEditTooltip() {
+			this.showEditTooltip = !this.showEditTooltip;
+		},
+		toggleDeleteTooltip() {
+			this.showDeleteTooltip = !this.showDeleteTooltip;
 		},
 	},
 };
@@ -88,10 +129,11 @@ export default {
 	font-size: 1.25rem;
 	margin: 15px;
 	transform: translateX(-35px);
-	transition: transform 0.2s ease, opacity 0.2s ease;
+	transition: transform 0.2s ease;
 
 	.body-container {
 		@include flex-center;
+		transition: opacity 0.2s ease;
 	}
 
 	&.hover {
@@ -106,12 +148,22 @@ export default {
 
 		.icons {
 			@include flex-center;
-			flex-direction: column;
 			position: absolute;
 			left: -10px;
 			transition: opacity 0.2s ease;
 
-			&.opened > svg {
+			.icon-wrapper {
+				@include flex-center;
+				width: 20px;
+				height: 20px;
+				position: absolute;
+				transform: translate(0px, 0px);
+				transition: transform 0.3s ease;
+				cursor: pointer;
+				z-index: 9;
+			}
+
+			&.opened .icon-wrapper {
 				&:nth-child(1) {
 					transform: translateX(60px);
 				}
@@ -125,14 +177,10 @@ export default {
 				}
 			}
 
-			& > svg {
+			& svg.icon {
 				fill: $bg-color-main;
 				stroke: $font-color;
 				stroke-width: 10px;
-				cursor: pointer;
-				position: absolute;
-				transform: translate(0px, 0px);
-				transition: transform 0.3s ease;
 			}
 		}
 
@@ -142,6 +190,7 @@ export default {
 			stroke-width: 6px;
 			cursor: pointer;
 			position: relative;
+			z-index: 9;
 
 			.line {
 				stroke-dasharray: 50 100;
