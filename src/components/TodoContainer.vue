@@ -12,6 +12,7 @@
 			v-bind:name="todo.content"
 			v-bind:due="todo.due"
 			v-bind:done="todo.done"
+			@updated="updateProps($event)"
 		/>
 	</section>
 	<section class="todo-create">
@@ -50,6 +51,12 @@ export default {
 		render(e) {
 			this.todos.push(e);
 		},
+		updateProps($event) {
+			const filtered = this.todos.filter(todo => todo.id === $event.id)[0];
+			filtered.content = $event.content;
+			filtered.due = $event.due;
+			filtered.done = $event.done;
+		}
 	},
 	created() {
 		this.sendGetRequest();

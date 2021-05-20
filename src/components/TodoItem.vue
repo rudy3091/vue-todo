@@ -42,6 +42,7 @@
 					class="icon-wrapper"
 					@mouseover="toggleEditTooltip"
 					@mouseout="toggleEditTooltip"
+					@click="makeItEdited"
 				>
 					<Tooltip content="Edit" :show="showEditTooltip" />
 					<svg class="icon" width="20" height="20" viewBox="0 0 100 100">
@@ -67,18 +68,49 @@
 		</div>
 
 		<div
+			v-if="!edit"
 			class="body-container"
 			:style="{ opacity: menuClicked && show ? 0.3 : 1 }"
 		>
 			<div class="name">{{ name }}</div>
 			<div class="due">{{ due }}</div>
 		</div>
+
+		<div v-if="edit" class="body-container edit-form">
+			<form action="none" @submit.prevent="handleEditSubmit">
+				<input
+					name="content"
+					v-model="nameLocal"
+					type="text"
+					autocomplete="off"
+				/>
+			</form>
+
+			<form action="none" @submit.prevent="handleEditSubmit">
+				<input name="due" v-model="dueLocal" type="text" autocomplete="off" />
+			</form>
+
+			<svg
+				width="20"
+				height="20"
+				viewBox="0 0 100 100"
+				class="cancel-edit"
+				@click="cancelEdit"
+			>
+				<line x1="0" y1="0" x2="100" y2="100" />
+				<line x1="100" y1="0" x2="0" y2="100" />
+			</svg>
+		</div>
 	</div>
 </template>
 
 <script>
 import Tooltip from "./Tooltip.vue";
-import { handleDone, handleDelete } from "../handlers/todoHandler.js";
+import {
+	handleDone,
+	handleUpdate,
+	handleDelete,
+} from "../handlers/todoHandler.js";
 
 export default {
 	name: "TodoItem",
@@ -93,9 +125,17 @@ export default {
 	},
 	data() {
 		return {
+			nameLocal: this.name,
+			dueLocal: this.due,
+			doneLocal: this.done,
+
+			lockHover: false,
 			show: false,
 			destroyed: false,
+			edit: false,
+			edited: false,
 			menuClicked: false,
+
 			showDoneTooltip: false,
 			showEditTooltip: false,
 			showDeleteTooltip: false,
@@ -103,6 +143,7 @@ export default {
 	},
 	methods: {
 		showIcons() {
+			if (this.lockHover) return;
 			this.show = true;
 		},
 		hideIcons() {
@@ -120,6 +161,9 @@ export default {
 		toggleDeleteTooltip() {
 			this.showDeleteTooltip = !this.showDeleteTooltip;
 		},
+		unlockHover() {
+			this.lockHover = false;
+		},
 		makeItDone() {
 			handleDone(this.tid, {
 				content: this.done,
@@ -128,10 +172,35 @@ export default {
 			});
 			this.destroyed = true;
 		},
+		makeItEdited() {
+			this.edit = true;
+			this.lockHover = true;
+		},
+		cancelEdit() {
+			this.unlockHover();
+			this.edit = false;
+		},
+		handleEditSubmit() {
+			handleUpdate(this.tid, {
+				content: this.nameLocal,
+				due: this.dueLocal,
+				done: this.doneLocal,
+			});
+			this.unlockHover();
+			this.edit = false;
+			this.edited = true;
+
+			this.$emit("updated", {
+				id: this.tid,
+				content: this.nameLocal,
+				due: this.dueLocal,
+				done: this.doneLocal,
+			});
+		},
 		makeItDeleted() {
 			handleDelete(this.tid);
 			this.destroyed = true;
-		}
+		},
 	},
 };
 </script>
@@ -151,6 +220,31 @@ export default {
 	.body-container {
 		@include flex-center;
 		transition: opacity 0.2s ease;
+	}
+
+	.edit-form {
+		& > form {
+			@include flex-center;
+
+			& > input {
+				width: 80%;
+				border: none;
+				border-bottom: 3px solid $font-color;
+				font-size: 1.25rem;
+				margin-right: 10px;
+
+				&:focus {
+					outline: none;
+				}
+			}
+		}
+
+		.cancel-edit {
+			fill: none;
+			stroke: $font-color;
+			stroke-width: 12px;
+			cursor: pointer;
+		}
 	}
 
 	&.hover {
