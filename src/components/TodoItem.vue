@@ -77,18 +77,20 @@
 		</div>
 
 		<div v-if="edit" class="body-container edit-form">
-			<form action="none" @submit.prevent="handleEditSubmit">
-				<input
-					name="content"
-					v-model="nameLocal"
-					type="text"
-					autocomplete="off"
-				/>
-			</form>
+			<div class="forms-container">
+				<form action="none" @submit.prevent="handleEditSubmit">
+					<input
+						name="content"
+						v-model="nameLocal"
+						type="text"
+						autocomplete="off"
+					/>
+				</form>
 
-			<form action="none" @submit.prevent="handleEditSubmit">
-				<input name="due" v-model="dueLocal" type="text" autocomplete="off" />
-			</form>
+				<form action="none" @submit.prevent="handleEditSubmit">
+					<input name="due" v-model="dueLocal" type="text" autocomplete="off" />
+				</form>
+			</div>
 
 			<svg
 				width="20"
@@ -217,6 +219,10 @@ export default {
 	transform: translateX(-35px);
 	transition: transform 0.2s ease;
 
+	@include small {
+		transform: translateX(-25px);
+	}
+
 	.body-container {
 		@include flex-center;
 		transition: opacity 0.2s ease;
@@ -231,10 +237,24 @@ export default {
 	}
 
 	.edit-form {
-		& > form {
+		@include small {
+			display: flex;
+			flex-direction: row;
+		}
+
+		.forms-container {
+			display: flex;
+			flex-direction: row;
+
+			@include small {
+				flex-direction: column;
+			}
+		}
+
+		& form {
 			@include flex-center;
 
-			& > input {
+			& input {
 				width: 80%;
 				border: none;
 				border-bottom: 3px solid $font-color;
