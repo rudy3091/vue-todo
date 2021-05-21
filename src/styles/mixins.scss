@@ -22,3 +22,11 @@
 @mixin fade-in($t) {
 	animation: fade-in $t ease-in-out;
 }
+
+$media-breakpoint: 600px;
+
+@mixin small {
+	@media (max-width: #{$media-breakpoint}) {
+		@content;
+	}
+}
