@@ -220,6 +220,14 @@ export default {
 	.body-container {
 		@include flex-center;
 		transition: opacity 0.2s ease;
+
+		@include small {
+			flex-direction: column;
+
+			& > .due {
+				margin: 0;
+			}
+		}
 	}
 
 	.edit-form {
