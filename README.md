@@ -1,24 +1,8 @@
 # vue-todo
 
-## Project setup
-```
-yarn install
-```
+Simple todo web application using Vue framework
 
-### Compiles and hot-reloads for development
-```
-yarn serve
-```
+contains: api calls, carousel-like clock, svg icons, smooth animations, responsive designs a bit
 
-### Compiles and minifies for production
-```
-yarn build
-```
+> backend server using [rudy3091/dummy-server](https://github.com/rudy3091/dummy-server)
 
-### Lints and fixes files
-```
-yarn lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
